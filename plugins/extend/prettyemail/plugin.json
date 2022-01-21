@@ -1,0 +1,17 @@
+{
+    "$schema": "../../../system/schema/extend.json",
+    "name": "Pretty Email",
+    "description": "Nice HTML email format, replaces plain text emails.",
+    "version": "1.0.0",
+    "api": "^8.0",
+    "url": "https://jdanek.eu",
+    "class": "PrettyEmailPlugin",
+    "langs": {
+        "prettyemail": "Resources/languages/"
+    },
+    "events": [
+        {"event": "mail.send", "method": "onSend", "priority": 999}
+    ],
+    "events.web": [],
+    "events.admin": []
+}
