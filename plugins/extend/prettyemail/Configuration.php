@@ -56,7 +56,7 @@ class Configuration extends ConfigAction
     private function loadMailTemplates(): array
     {
         $templates = [];
-        $files = glob(__DIR__ . DIRECTORY_SEPARATOR . "Resources/templates/*.{html}", GLOB_BRACE);
+        $files = glob(__DIR__ . DIRECTORY_SEPARATOR . "resources/templates/*.{html}", GLOB_BRACE);
 
         foreach ($files as $file) {
             $info = pathinfo($file);

@@ -35,7 +35,7 @@ class PrettyEmailPlugin extends ExtendPlugin
         $cfg = $this->getConfig();
 
         // load template
-        $templateFile = __DIR__ . '/Resources/templates/' . $cfg->offsetGet('template') . '.html';
+        $templateFile = __DIR__ . '/resources/templates/' . $cfg->offsetGet('template') . '.html';
         $template = file_get_contents($templateFile);
 
         $logo = "<h1>" . Settings::get('title') . "</h1>";
