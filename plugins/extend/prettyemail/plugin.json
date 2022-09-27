@@ -9,7 +9,7 @@
     "url": "https://github.com/friends-of-sunlight-cms/",
     "class": "PrettyEmailPlugin",
     "langs": {
-        "prettyemail": "resources/languages/"
+        "prettyemail": "lang"
     },
     "events": [
         {"event": "mail.send", "method": "onSend", "priority": 999}
