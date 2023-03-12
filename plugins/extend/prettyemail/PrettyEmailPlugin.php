@@ -10,25 +10,6 @@ use Sunlight\Settings;
 
 class PrettyEmailPlugin extends ExtendPlugin
 {
-    public function getConfigDefaults(): array
-    {
-        return [
-            'template' => 'default',
-            'use_logo' => false,
-            'logo' => '',
-            'footer' => '',
-        ];
-    }
-
-    public function getAction(string $name): ?PluginAction
-    {
-        if ($name === 'config') {
-            return new Configuration($this);
-        }
-
-        return parent::getAction($name);
-    }
-
     public function onSend(array $args): void
     {
         // plugin config
@@ -61,5 +42,30 @@ class PrettyEmailPlugin extends ExtendPlugin
         $args['message'] = strtr($template, $replacement);// replace
         $args['headers']['Content-Type'] = 'text/html; charset=UTF-8';
         $args['result'] = null; // only the message is edited, the message is still sent by the system
+    }
+
+    /**
+     * ============================================================================
+     *  EXTEND CONFIGURATION
+     * ============================================================================
+     */
+
+    public function getConfigDefaults(): array
+    {
+        return [
+            'template' => 'default',
+            'use_logo' => false,
+            'logo' => '',
+            'footer' => '',
+        ];
+    }
+
+    public function getAction(string $name): ?PluginAction
+    {
+        if ($name === 'config') {
+            return new Configuration($this);
+        }
+
+        return parent::getAction($name);
     }
 }
