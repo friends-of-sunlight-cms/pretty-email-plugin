@@ -16,7 +16,7 @@ class PrettyEmailPlugin extends ExtendPlugin
         $cfg = $this->getConfig();
 
         // load template
-        $templateFile = __DIR__ . '/resources/templates/' . $cfg->offsetGet('template') . '.html';
+        $templateFile = __DIR__ . DIRECTORY_SEPARATOR . '../resources/templates/' . $cfg->offsetGet('template') . '.html';
         $template = file_get_contents($templateFile);
 
         $logo = "<h1>" . Settings::get('title') . "</h1>";
@@ -63,7 +63,7 @@ class PrettyEmailPlugin extends ExtendPlugin
     public function getAction(string $name): ?PluginAction
     {
         if ($name === 'config') {
-            return new Configuration($this);
+            return new ConfigAction($this);
         }
 
         return parent::getAction($name);
