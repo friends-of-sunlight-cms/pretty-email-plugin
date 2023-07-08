@@ -43,29 +43,4 @@ class PrettyEmailPlugin extends ExtendPlugin
         $args['headers']['Content-Type'] = 'text/html; charset=UTF-8';
         $args['result'] = null; // only the message is edited, the message is still sent by the system
     }
-
-    /**
-     * ============================================================================
-     *  EXTEND CONFIGURATION
-     * ============================================================================
-     */
-
-    public function getConfigDefaults(): array
-    {
-        return [
-            'template' => 'default',
-            'use_logo' => false,
-            'logo' => '',
-            'footer' => '',
-        ];
-    }
-
-    public function getAction(string $name): ?PluginAction
-    {
-        if ($name === 'config') {
-            return new ConfigAction($this);
-        }
-
-        return parent::getAction($name);
-    }
 }
