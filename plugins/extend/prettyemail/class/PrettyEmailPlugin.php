@@ -3,7 +3,6 @@
 namespace SunlightExtend\Prettyemail;
 
 use Sunlight\Core;
-use Sunlight\Plugin\Action\PluginAction;
 use Sunlight\Plugin\ExtendPlugin;
 use Sunlight\Router;
 use Sunlight\Settings;
@@ -13,15 +12,15 @@ class PrettyEmailPlugin extends ExtendPlugin
     public function onSend(array $args): void
     {
         // plugin config
-        $cfg = $this->getConfig();
+        $config = $this->getConfig();
 
         // load template
-        $templateFile = __DIR__ . DIRECTORY_SEPARATOR . '../resources/templates/' . $cfg->offsetGet('template') . '.html';
+        $templateFile = __DIR__ . DIRECTORY_SEPARATOR . '../resources/templates/' . $config->offsetGet('template') . '.html';
         $template = file_get_contents($templateFile);
 
         $logo = "<h1>" . Settings::get('title') . "</h1>";
-        if ($cfg->offsetGet('use_logo')) {
-            $logoPath = Router::path($cfg->offsetGet('logo'), ['absolute' => true]);
+        if ($config->offsetGet('use_logo')) {
+            $logoPath = Router::path($config->offsetGet('logo'), ['absolute' => true]);
             $logo = '<img src="' . $logoPath . '" alt="Logo ' . Settings::get('title') . '" border="0">';
         }
 
@@ -32,8 +31,8 @@ class PrettyEmailPlugin extends ExtendPlugin
             '%domain%' => Core::getBaseUrl()->buildAbsolute(),
             '%subject%' => $args['subject'],
             '%content%' => $args['message'],
-            '%footer%' => (!empty($cfg->offsetGet('footer'))
-                ? $cfg->offsetGet('footer') . '<br>'
+            '%footer%' => (!empty($config->offsetGet('footer'))
+                ? $config->offsetGet('footer') . '<br>'
                 : ''),
             '%year%' => date('Y'),
             '%copyright%' => _lang('prettyemail.copyright')
