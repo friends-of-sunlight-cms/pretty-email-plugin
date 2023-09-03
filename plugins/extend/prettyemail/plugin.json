@@ -2,17 +2,16 @@
     "$schema": "../../../system/schema/extend.json",
     "name": "Pretty Email",
     "description": "Nice HTML email format, replaces plain text emails.",
-    "version": "0.9.2",
+    "authors": [
+        {"name": "Friends of Sunlight CMS", "url": "https://github.com/friends-of-sunlight-cms/"}
+    ],
+    "version": "1.0.0",
     "environment": {
         "system": "^8.0"
     },
     "dependencies": {
-        "fosc-lib": ">=0.9.2"
+        "fosc-lib": ">=1.0.0"
     },
-    "authors": [
-        {"name": "Friends of Sunlight CMS", "url": "https://github.com/friends-of-sunlight-cms/"}
-    ],
-    "class": "PrettyEmailPlugin",
     "config_defaults": {
         "template": "default",
         "use_logo": false,
@@ -26,7 +25,7 @@
         "prettyemail": "lang"
     },
     "events": [
-        {"event": "mail.send", "method": "onSend", "priority": 999}
+        {"event": "mail.send", "script": "event/mail_send.php", "priority": 9999}
     ],
     "events.web": [],
     "events.admin": []
