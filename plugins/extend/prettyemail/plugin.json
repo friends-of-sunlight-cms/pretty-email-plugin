@@ -9,9 +9,6 @@
     "environment": {
         "system": "^8.0"
     },
-    "dependencies": {
-        "fosc-lib": ">=1.0.0"
-    },
     "config_defaults": {
         "template": "default",
         "use_logo": false,
@@ -26,7 +23,5 @@
     },
     "events": [
         {"event": "mail.send", "script": "event/mail_send.php", "priority": 9999}
-    ],
-    "events.web": [],
-    "events.admin": []
+    ]
 }

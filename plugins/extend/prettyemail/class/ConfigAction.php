@@ -2,9 +2,9 @@
 
 namespace SunlightExtend\Prettyemail;
 
-use Fosc\Feature\Plugin\Config\FieldGenerator;
 use Sunlight\Plugin\Action\ConfigAction as BaseConfigAction;
 use Sunlight\Util\ConfigurationFile;
+use Sunlight\Util\Form;
 
 class ConfigAction extends BaseConfigAction
 {
@@ -12,25 +12,33 @@ class ConfigAction extends BaseConfigAction
     {
         $config = $this->plugin->getConfig();
 
-        $langPrefix = "%p:prettyemail.config";
-
-        $gen = new FieldGenerator($this->plugin);
-        $gen->generateField('template', $langPrefix, '%select', [
-            'class' => 'inputsmall',
-            'select_options' => $this->loadMailTemplates(),
-            'select_default' => 'default',
-        ])
-            ->generateField('use_logo', $langPrefix, '%checkbox', [
-                'after' => '<small>' . _lang('prettyemail.config.use_logo.hint') . '</small>'
-            ])
-            ->generateField('logo', $langPrefix, '%text', [
-                'after' => '<small>' . _lang('prettyemail.config.logo.hint') . '</small>'
-            ])
-            ->generateField('footer', $langPrefix, _buffer(function () use ($config) { ?>
-                <textarea name="config[footer]" class="areasmall" class="areamedium"><?= $config->offsetGet('footer') ?></textarea>
-            <?php }), [], 'text');
-
-        return $gen->getFields();
+        return [
+            'template' => [
+                'label' => _lang('prettyemail.config.template'),
+                'input' => _buffer(function () use ($config) { ?>
+                    <select name="config[editor_mode]" class="inputsmall">
+                        <?php foreach ($this->loadMailTemplates() as  $template):?>
+                            <option value="<?= _e($template) ?>" <?= Form::selectOption($config['template'] === $template) ?>><?= _e($template) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php }),
+            ],
+            'use_logo' => [
+                'label' => _lang('prettyemail.config.use_logo'),
+                'input' => '<input type="checkbox" name="config[use_logo]" value="1"' . Form::activateCheckbox($config['use_logo'])  . '>',
+                'type' => 'checkbox'
+            ],
+            'logo' => [
+                'label' => _lang('prettyemail.config.logo'),
+                'input' => '<input type="text" name="config[logo]" value="' . Form::restorePostValue('logo', $config['logo'], false) . '">',
+                'type' => 'text',
+            ],
+            'footer' => [
+                'label' => _lang('prettyemail.config.footer'),
+                'input' => '<textarea name="config[footer]" class="areasmall">' . Form::restorePostValue('footer', $config['footer'], false) . '</textarea>',
+                'type' => 'text',
+            ]
+        ];
     }
 
     protected function mapSubmittedValue(ConfigurationFile $config, string $key, array $field, $value): ?string
