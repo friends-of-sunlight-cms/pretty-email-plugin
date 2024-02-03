@@ -5,6 +5,7 @@ namespace SunlightExtend\Prettyemail;
 use Sunlight\Plugin\Action\ConfigAction as BaseConfigAction;
 use Sunlight\Util\ConfigurationFile;
 use Sunlight\Util\Form;
+use Sunlight\Util\Request;
 
 class ConfigAction extends BaseConfigAction
 {
@@ -15,27 +16,21 @@ class ConfigAction extends BaseConfigAction
         return [
             'template' => [
                 'label' => _lang('prettyemail.config.template'),
-                'input' => _buffer(function () use ($config) { ?>
-                    <select name="config[editor_mode]" class="inputsmall">
-                        <?php foreach ($this->loadMailTemplates() as  $template):?>
-                            <option value="<?= _e($template) ?>" <?= Form::selectOption($config['template'] === $template) ?>><?= _e($template) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                <?php }),
+                'input' => Form::select('config[editor_mode]', $this->loadMailTemplates(), $config['template'], ['class' => 'inputsmall']),
             ],
             'use_logo' => [
                 'label' => _lang('prettyemail.config.use_logo'),
-                'input' => '<input type="checkbox" name="config[use_logo]" value="1"' . Form::activateCheckbox($config['use_logo'])  . '>',
+                'input' => '<input type="checkbox" name="config[use_logo]" value="1"' . Form::loadCheckbox('config', $config['use_logo'], 'use_logo')  . '>',
                 'type' => 'checkbox'
             ],
             'logo' => [
                 'label' => _lang('prettyemail.config.logo'),
-                'input' => '<input type="text" name="config[logo]" value="' . Form::restorePostValue('logo', $config['logo'], false) . '">',
+                'input' => '<input type="text" name="config[logo]" value="' . Request::post('logo', $config['logo']) . '">',
                 'type' => 'text',
             ],
             'footer' => [
                 'label' => _lang('prettyemail.config.footer'),
-                'input' => '<textarea name="config[footer]" class="areasmall">' . Form::restorePostValue('footer', $config['footer'], false) . '</textarea>',
+                'input' => '<textarea name="config[footer]" class="areasmall">' . Request::post('footer', $config['footer']) . '</textarea>',
                 'type' => 'text',
             ]
         ];
