@@ -20,17 +20,17 @@ class ConfigAction extends BaseConfigAction
             ],
             'use_logo' => [
                 'label' => _lang('prettyemail.config.use_logo'),
-                'input' => '<input type="checkbox" name="config[use_logo]" value="1"' . Form::loadCheckbox('config', $config['use_logo'], 'use_logo')  . '>',
+                'input' => Form::input('checkbox', 'config[use_logo]', '1', ['checked' => Form::loadCheckbox('config', $config['use_logo'], 'use_logo')]),
                 'type' => 'checkbox'
             ],
             'logo' => [
                 'label' => _lang('prettyemail.config.logo'),
-                'input' => '<input type="text" name="config[logo]" value="' . Request::post('logo', $config['logo']) . '">',
+                'input' => Form::input('text', 'config[logo]', Request::post('logo', $config['logo'])),
                 'type' => 'text',
             ],
             'footer' => [
                 'label' => _lang('prettyemail.config.footer'),
-                'input' => '<textarea name="config[footer]" class="areasmall">' . Request::post('footer', $config['footer']) . '</textarea>',
+                'input' => Form::textarea('config[footer]', Request::post('footer', $config['footer']), ['class' => 'areasmall']),
                 'type' => 'text',
             ]
         ];
